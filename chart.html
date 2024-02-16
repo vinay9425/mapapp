@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GeoServer WFS Data to Chart.js with Time Scale</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="myChart" width="400" height="400"></div>
+
+    <script>
+        // Make AJAX request to GeoServer's WFS endpoint
+        var url = 'http://localhost:8080/geoserver/wfs?service=wfs&version=1.0.0&request=GetFeature&typeNames=postgis:chart_data&outputFormat=application/json';
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                // Parse response and extract data for chart
+                var chartData = {
+                    labels: [],
+                    datasets: [
+                        { label: 'Y', data: [], borderColor: 'red', fill: false },
+                        { label: 'Z', data: [], borderColor: 'blue', fill: false },
+                        { label: 'N', data: [], borderColor: 'green', fill: false }
+                    ]
+                };
+
+                data.features.forEach(feature => {
+                    chartData.labels.push(feature.properties.p);
+                    chartData.datasets[0].data.push(feature.properties.y);
+                    chartData.datasets[1].data.push(feature.properties.z);
+                    chartData.datasets[2].data.push(feature.properties.n);
+                });
+
+                // Render chart using Chart.js
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: chartData,
+                    options: {
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'P'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Value'
+                                }
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    </script>
+</body>
+</html>

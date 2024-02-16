@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Map Application</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    #map {
+      height: 80vh;
+      width: 100%;
+    }
+
+    #sidebar {
+      height: 20vh;
+      width: 100%;
+      background-color: #f4f4f4;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div id="sidebar">
+    <h2>Base Map Selection</h2>
+    <select id="base-map-select">
+      <option value="osm">OpenStreetMap</option>
+      <option value="google-streets">Google Streets</option>
+      <!-- Add more base map options here -->
+    </select>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="map12.js"></script>
+</body>
+</html>

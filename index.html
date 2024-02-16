@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Map Application</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    #map {
+      height: 100vh;
+      width: 80%; /* Adjust map width */
+      float: left;
+    }
+
+    #sidebar {
+      height: 100vh;
+      width: 20%; /* Adjust sidebar width */
+      float: right;
+      background-color: #f4f4f4;
+      padding: 10px;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+
+    .moveable {
+      cursor: move;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  
+  <div id="sidebar">
+    <h2>Layer List</h2>
+    <div id="layer-list"></div>
+  </div>
+  
+  <div id="result-list" class="moveable">
+    <h2>Results</h2>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- Proj4JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
+  <!-- Proj4Leaflet -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <script src="map1.js"></script>
+
+  <script>
+
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+    // Function to clear result info
+    function clearResults() {
+      
+      var resultList = document.getElementById('result-list');
+      resultList.innerHTML = '<h2>Results</h2>';
+    }
+
+    // Make result tab moveable
+    var resultTab = document.getElementById('result-list');
+    var isDragging = false;
+    var offset = { x: 0, y: 0 };
+
+    resultTab.addEventListener('mousedown', function (e) {
+      isDragging = true;
+      offset = {
+        x: e.clientX - resultTab.getBoundingClientRect().left,
+        y: e.clientY - resultTab.getBoundingClientRect().top
+      };
+    });
+
+    document.addEventListener('mousemove', function (e) {
+      if (!isDragging) return;
+      resultTab.style.left = e.clientX - offset.x + 'px';
+      resultTab.style.top = e.clientY - offset.y + 'px';
+    });
+
+    document.addEventListener('mouseup', function () {
+      isDragging = false;
+    });
+  </script>
+</body>
+</html>
