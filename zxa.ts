@@ -5,7 +5,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <canvas id="myChart" width="400" height="400"></canvas>
+    <canvas id="myChart" width="1000" height="500"></canvas>
 
     <script>
         // Make AJAX request to GeoServer's WFS endpoint
@@ -25,9 +25,9 @@
 
                 data.features.forEach(feature => {
                     chartData.labels.push(feature.properties.p);
-                    chartData.datasets[0].data.push(feature.properties.y);
-                    chartData.datasets[1].data.push(feature.properties.z);
-                    chartData.datasets[2].data.push(feature.properties.n);
+                    chartData.datasets[0].data.push(parseFloat(feature.properties.y)); // Convert to float
+                    chartData.datasets[1].data.push(parseFloat(feature.properties.z)); // Convert to float
+                    chartData.datasets[2].data.push(parseFloat(feature.properties.n)); // Convert to float
                 });
 
                 // Render chart using Chart.js
